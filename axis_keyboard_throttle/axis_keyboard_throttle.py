@@ -1,56 +1,64 @@
 import math
-import time
+
 import gremlin
-from gremlin.user_plugin import *
+from gremlin.user_script import *
 
 
-mode = ModeVariable("Mode", "The mode in which to use this mapping")
+mode = ModeVariable(
+    "Mode",
+    "The mode in which to use this mapping",
+    False
+)
 
 axis = PhysicalInputVariable(
-        "Input axis",
-        "Axis to treat as throttle input",
-        [gremlin.common.InputType.JoystickAxis]
+    "Input axis",
+    "Axis to treat as throttle input",
+    False,
+    [gremlin.common.InputType.JoystickAxis]
 )
 
 inc_out = StringVariable(
-        "Increment throttle",
-        "Key pressed to increment the throttle",
-        "2"
+    "Increment throttle",
+    "Key pressed to increment the throttle",
+    False,
+    "2"
 )
 
 dec_out = StringVariable(
-        "Reduce throttle",
-        "Key pressed to reduce the throttle",
-        "1"
+    "Reduce throttle",
+    "Key pressed to reduce the throttle",
+    False,
+    "1"
 )
 
 step_size = FloatVariable(
-        "Step size",
-        "Amount of change per step",
-        0.05,
-        0.0,
-        1.0
+    "Step size",
+    "Amount of change per step",
+    False,
+    0.05,
+    0.0,
+    1.0
 )
 
-# Decorators for the two physical axes
+# Decorators for the two physical axes.
 decorator = axis.create_decorator(mode.value)
 
-# Storage for axis values
+# Storage for axis values.
 g_last_value = 0.0
 
-# Increment macro
+# Increment macro.
 inc_macro = gremlin.macro.Macro()
 inc_macro.exclusive = True
 inc_macro.tap(inc_out.value)
 inc_macro.repeat = gremlin.macro.CountRepeat(1, 0.01)
 
-# Decrement macro
+# Decrement macro.
 dec_macro = gremlin.macro.Macro()
 dec_macro.exclusive = True
 dec_macro.tap(dec_out.value)
 dec_macro.repeat = gremlin.macro.CountRepeat(1, 0.01)
 
-# Handle to the macro manager
+# Handle to the macro manager.
 macro_manager = gremlin.macro.MacroManager()
 
 
@@ -70,4 +78,3 @@ def throttle_to_keyboard(event, vjoy):
         g_last_value = cur_value
         action.repeat.count = count
         macro_manager.queue_macro(action)
-
