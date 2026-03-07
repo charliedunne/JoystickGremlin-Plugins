@@ -4,4 +4,4 @@ This repository holds a collection of plugins for use with [Joystick Gremlin](ht
 
 ## Using a plugin
 
-To use a plugin you have to download its code and then as outlined in the [manual]([https://whitemagic.github.io/JoystickGremlin/interface/#3_7](https://whitemagic.github.io/JoystickGremlin/interface/scripts.html)).
+To use a plugin you have to download its code and then as outlined in the [manual](https://whitemagic.github.io/JoystickGremlin/interface/scripts.html).
