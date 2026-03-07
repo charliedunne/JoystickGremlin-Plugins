@@ -41,35 +41,33 @@ btn_4 = PhysicalInputVariable(
 state = [0, 0]
 
 
-def set_state(vjoy):
-    device = vjoy[vjoy_hat.vjoy_id]
-    device.hat(vjoy_hat.vjoy_id).direction  = \
-        gremlin.types.HatDirection.to_enum(tuple(state))
+def set_state():
+    vjoy_hat.remap(gremlin.types.HatDirection.to_enum(tuple(state)))
 
 
 @btn_1.decorator(mode)
-def button_1(event, vjoy):
+def button_1(event):
     global state
     state[1] = 1 if event.is_pressed else 0
-    set_state(vjoy)
+    set_state()
 
 
 @btn_2.decorator(mode)
-def button_2(event, vjoy):
+def button_2(event):
     global state
     state[0] = 1 if event.is_pressed else 0
-    set_state(vjoy)
+    set_state()
 
 
 @btn_3.decorator(mode)
-def button_3(event, vjoy):
+def button_3(event):
     global state
     state[1] = -1 if event.is_pressed else 0
-    set_state(vjoy)
+    set_state()
 
 
 @btn_4.decorator(mode)
-def button_4(event, vjoy):
+def button_4(event):
     global state
     state[0] = -1 if event.is_pressed else 0
-    set_state(vjoy)
+    set_state()
